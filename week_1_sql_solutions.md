@@ -1,3 +1,22 @@
+### Question 1: Knowing Docker tags
+
+I went to docker documentation to get this information that --iidfile string has the text "Write the image ID to the file" and read the purpose of this tag
+
+### Question 2: Understanding Docker first run: Run docker with the python:3.9 image in an interactive mode and the entrypoint of bash. Now check the python modules that are installed ( use pip list). How many python packages/modules are installed?
+
+After setting up my GCP VM Instance I opened Python 3.9 image on docker in Interactive mode and the entrypoint of bash as following
+
+```bash
+docker run -it --entrypoint=bash python:3.9
+```
+
+And when I was able to get in I typed following command to get the Python packages in pip and their versions
+
+```bash
+python -m pip list
+```
+
+
 ### Question 3: Count Records: How many taxi trips were totally made on January 15?
 
 ```sql
