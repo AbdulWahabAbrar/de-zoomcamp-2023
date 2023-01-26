@@ -1,3 +1,5 @@
+# Week 1 Homework Part A
+
 ### Question 1: Knowing Docker tags
 
 I went to docker documentation to get this information that --iidfile string has the text "Write the image ID to the file" and read the purpose of this tag
@@ -16,6 +18,11 @@ And when I was able to get in I typed following command to get the Python packag
 python -m pip list
 ```
 
+## Before moving on to SQL part, I would like to mention the database names
+
+..* green_trip_data: This is the Green Taxi Trips Database
+..* zones: This is the Taxi Zone Database
+..* joined_trip_data: This is the Joined Database of green_trip_data and zones
 
 ### Question 3: Count Records: How many taxi trips were totally made on January 15?
 
@@ -24,12 +31,14 @@ SELECT COUNT(*) FROM green_trip_data
 WHERE DATE(lpep_pickup_datetime) = '2019-01-15';
 ```
 
+
 ### Question 4: Largest Trip for Each Day: Which was the day with the largest trip distance Use the pick up time for your calculations.
 
 ```sql
 SELECT lpep_pickup_datetime, trip_distance FROM green_trip_data
 WHERE trip_distance = (SELECT MAX(trip_distance) FROM green_trip_data);
 ```
+
 
 ### Question 5: The number of Passengers: In 2019-01-01 how many trips had 2 and 3 passengers?
 
@@ -39,6 +48,7 @@ FROM green_trip_data
 WHERE passenger_count IN (2,3) and DATE(lpep_pickup_datetime) = '2019-01-01'
 GROUP BY DATE(lpep_pickup_datetime), passenger_count;
 ```
+
 
 ### Question 6: Largest Tip: For the passengers picked up in the Astoria Zone which was the drop off zone that had the largest tip? We want the name of the zone, not the id.
 
