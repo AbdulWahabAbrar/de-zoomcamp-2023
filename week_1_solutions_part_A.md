@@ -20,9 +20,9 @@ python -m pip list
 
 ## Before moving on to SQL part, I would like to mention the database names
 
-..* green_trip_data: This is the Green Taxi Trips Database
-..* zones: This is the Taxi Zone Database
-..* joined_trip_data: This is the Joined Database of green_trip_data and zones
+1. green_trip_data: This is the Green Taxi Trips Database
+2. zones: This is the Taxi Zone Database
+3. joined_trip_data: This is the Joined Database of green_trip_data and zones
 
 ### Question 3: Count Records: How many taxi trips were totally made on January 15?
 
