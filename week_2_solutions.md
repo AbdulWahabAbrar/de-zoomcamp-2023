@@ -68,12 +68,18 @@ if __name__ == "__main__":
  
  ```
  
+ 
+ 
+ 
  # Question 2: Using the flow in etl_web_to_gcs.py, create a deployment to run on the first of every month at 5am UTC. What’s the cron schedule for that?
  
  Below image shows the deployment tab of Prefect Orion UI, where I have 4 deployments, out of which the first deployment is scheduled for first of every month at 5 AM UTC,
  it's cron schedule is 0 5 1 * * 
  
  ![alt text](https://github.com/AbdulWahabAbrar/de-zoomcamp-2023/blob/main/Cron%20Job.png "Cron Job Screenshot")
+ 
+ 
+ 
  
  # Question 3: Using etl_gcs_to_bq.py as a starting point, modify the script for extracting data from GCS and loading it into BigQuery for the months Feb and March of 2019.
 This new script should not fill or remove rows with missing values. (The script is really just doing the E and L parts of ETL).
@@ -139,6 +145,9 @@ if __name__ == "__main__":
 ### Below is the screenshot from BigQuery which shows the count of rows processed by the flow
 
  ![alt text](https://github.com/AbdulWahabAbrar/de-zoomcamp-2023/blob/main/bq_yellowrides.png "Count of Rows Processed")
+
+
+
 
 # Question 4: GitHub storage block
 
@@ -231,6 +240,46 @@ if __name__ == "__main__":
     etl_web_to_gcs()
 ```
 
+
+
+
 # Question 5: Email or Slack notifications
 
 I used Slack notifications for this Question 5.
+
+Below are the steps I followed
+
+1. Created a App on api.slack.com and got the webhook URL and configured the notifications to be sent to my Direct Message on Slack
+2. Made necessary changes to the code I used in Question 4, I changed the ```bash etl_web_to_gcs``` Flow to process green taxi data for April 2019. Below is the code snippet for the same
+
+```python
+
+@flow()
+def etl_web_to_gcs() -> None:
+    """The main ETL function"""
+    color = "green"
+    year = 2019
+    month = 4
+    dataset_file = f"{color}_tripdata_{year}-{month:02}"
+    dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
+
+    df = fetch(dataset_url)
+    df_clean = clean(df)
+    path = write_local(df_clean, color, dataset_file)
+    write_gcs(path)
+
+
+if __name__ == "__main__":
+    etl_web_to_gcs()
+```
+
+3. See the below screenshot for the Slack Direct Message which I got after the process was completed
+![alt text](https://github.com/AbdulWahabAbrar/de-zoomcamp-2023/blob/main/slack_notif_flow.png "Slack DM")
+
+
+
+# Question 6: Secret Block
+
+Screenshot below shows that I got 8 asterick characters for 10 digit password
+
+![alt text](https://github.com/AbdulWahabAbrar/de-zoomcamp-2023/blob/main/secret_block.png "Secret Block Screenshot")
