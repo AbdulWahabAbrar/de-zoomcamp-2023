@@ -1,5 +1,7 @@
 # Week 4 Homework
 
+Note: I did not include the Data Studio (Looker Studio) dashboard links, please let me know if it need to be added. Thank you!
+
 # Q1: What is the count of records in the model fact_trips after running all models with the test run variable disabled and filtering for 2019 and 2020 data only (pickup datetime)?
 
 After doing deduplication of green and yellow trips, when we run the below script, it will get the accurate answer (Image attached for the output)
@@ -102,4 +104,30 @@ If we compile the above code with ```bash dbt build --var 'is_test_run: false'``
 
 ![alt text](https://github.com/AbdulWahabAbrar/de-zoomcamp-2023/blob/main/q3.png "Stg FHV Table Count")
 
-# Q4: 
+# Q4: What is the count of records in the model fact_fhv_trips after running all dependencies with the test run variable disabled (:false)?
+
+After succesfully running the dependencies of fact_fhv_trips, then you need to run the below fact_fhv_trips.sql model with the test run variable disabled (Screenshot attached below the code)
+
+```sql
+{{ config(materialized='table') }}
+
+with fhv_data as (
+    select *, 
+    from {{ ref('stg_fhv_tripdata') }}
+),
+
+dim_zones as (
+    select * from {{ ref('dim_zones') }}
+    where borough != 'Unknown'
+)
+
+select *
+from fhv_data
+inner join dim_zones as pickup_zone
+on fhv_data.pickup_locationid = pickup_zone.locationid
+```
+![alt text](https://github.com/AbdulWahabAbrar/de-zoomcamp-2023/blob/main/q4.png "fact_fhv_trips in BQ")
+
+# Q5: What is the month with the biggest amount of rides after building a tile for the fact_fhv_trips table?
+ 
+ According to the dashboard I made, January had the highest amount of rides.
